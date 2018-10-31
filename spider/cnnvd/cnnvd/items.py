@@ -12,3 +12,9 @@ class CnnvdItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class VulnerabilityItem(scrapy.Item):
+    title = scrapy.Field()
+    cnnvdId = scrapy.Field()
+    vulnerLevel = scrapy.Field()
+
