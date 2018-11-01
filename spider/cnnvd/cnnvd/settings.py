@@ -8,20 +8,29 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import logging
+
 
 BOT_NAME = 'cnnvd'
 
 SPIDER_MODULES = ['cnnvd.spiders']
 NEWSPIDER_MODULE = 'cnnvd.spiders'
 
+LOG_ENABLE = False
 LOG_LEVEL = 'WARNING'
+LOG_FILE = 'cnnvd.log'
 
+MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
+MONGO_DATABASE = 'zgq'
+
+
+DOWNLOADER_STATS = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'cnnvd (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+# ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -41,10 +50,10 @@ DOWNLOAD_DELAY = 1
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  # 'Accept-Language': 'en',
+}
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
@@ -67,7 +76,8 @@ DOWNLOAD_DELAY = 1
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'cnnvd.pipelines.CnnvdPipeline': 300,
+   'cnnvd.pipelines.BloomFilterPipeline': 300,
+   'cnnvd.pipelines.CnnvdPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

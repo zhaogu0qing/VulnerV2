@@ -13,8 +13,24 @@ class CnnvdItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
+
 class VulnerabilityItem(scrapy.Item):
+    url = scrapy.Field()
     title = scrapy.Field()
-    cnnvdId = scrapy.Field()
+    CNNVDId = scrapy.Field()
+    CVEId = scrapy.Field()
+    publishTime = scrapy.Field()
+    updateTime = scrapy.Field()
+    vulnerSource = scrapy.Field()
     vulnerLevel = scrapy.Field()
+    vulnerType = scrapy.Field()
+    threatType = scrapy.Field()
+    firm = scrapy.Field()
+    vulnerSummary = scrapy.Field()
+    vulnerBulletin = scrapy.Field()
+    vulnerReference = scrapy.Field()
+    vulnerAffect = scrapy.Field()
+    vulnerPatch = scrapy.Field()
+
+
 
