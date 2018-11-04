@@ -1,0 +1,33 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'image/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename = 'image/favicon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block title %} 漏洞舆情采集系统 {% endblock %}
+
+
+{% block content %}
+<div class="container">
+      <h2>漏洞舆情采集系统</h2>
+
+     {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+     {% endfor %}
+
+     {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

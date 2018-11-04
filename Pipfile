@@ -11,6 +11,8 @@ flask-sqlalchemy = "*"
 alembic = "*"
 flask-migrate = "*"
 flask-pymongo = "*"
+flask-wtf = "*"
+flask-bootstrap = "*"
 
 [dev-packages]
 watchdog = "*"

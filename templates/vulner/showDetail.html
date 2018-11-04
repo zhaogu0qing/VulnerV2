@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}所有漏洞{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h2>{{ vulner.title }}</h2>
+    </div>
+    <div>
+        <span><a href="{{ url_for('vulner.get_all') }}">&lt;&lt;返回</a></span>
+    </div>
+    <div class="col-md-4">
+        <div>
+            <p>{{ vulner.CNNVDId }}</p>
+            <p>{{ vulner.CVEId }}</p>
+            <p>{{ vulner.publishTime }}</p>
+            <p>{{ vulner.vulnerSummary | safe }}</p>
+            <p>{{ vulner.vulnerBulletin | safe }}</p>
+            <p>{{ vulner.vulnerPatch | safe }}</p>
+        </div>
+    </div>
+{% endblock %}
