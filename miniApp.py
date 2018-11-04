@@ -25,12 +25,8 @@ def json():
 @app.route('/book')
 def book():
     books = [i for i in mongo['zgq']['douban_book'].find({}, {'_id': 0}).limit(10)]
-    # print(books)
     return jsonify(books)
 
-@app.cli.command()
-def cmd_test():
-    click.echo('cmd test.')
 
 
 
