@@ -1,5 +1,5 @@
 [[source]]
-url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+url = "http://pypi.douban.com/simple"
 verify_ssl = true
 name = "pypi"
 
@@ -13,6 +13,7 @@ flask-migrate = "*"
 flask-pymongo = "*"
 flask-wtf = "*"
 flask-bootstrap = "*"
+flask-login = "*"
 
 [dev-packages]
 watchdog = "*"

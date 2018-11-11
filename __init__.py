@@ -5,24 +5,29 @@
 @File    : __init__.py.py
 @Software: PyCharm
 """
-from flask import Flask
+from flask import Flask, redirect, url_for, render_template
 from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
+from flask_login import LoginManager
+
+from .config import config
+
 from . import db
 
 bootstrap = Bootstrap()
+login_manager = LoginManager()
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_pyfile('config.py', silent=True)
-    app.config.from_mapping(
-        MONGO_URI='mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin',
-        MONGO_DATABASE='zgq',
-    )
 
+    config_name = 'development'
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
 
     db.init_db(app)
     bootstrap.init_app(app)
+    login_manager.session_protection = 'strong'
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
 
     from . import auth
     app.register_blueprint(auth.bp)
@@ -30,8 +35,9 @@ def create_app():
     from . import vulnerability
     app.register_blueprint(vulnerability.bp)
 
-    @app.route('/hello')
-    def hello():
-        return 'Hello, world!'
+    @app.route('/index')
+    def index():
+        return render_template('index.html')
+        # return redirect(url_for('vulner.get_all', page_num=0))
 
     return app
