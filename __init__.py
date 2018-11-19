@@ -8,6 +8,7 @@
 from flask import Flask, redirect, url_for, render_template
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from flask_mongoalchemy import MongoAlchemy
 
 from .config import config
 
@@ -15,6 +16,7 @@ from . import db
 
 bootstrap = Bootstrap()
 login_manager = LoginManager()
+mongodb = MongoAlchemy()
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -24,6 +26,7 @@ def create_app():
     config[config_name].init_app(app)
 
     db.init_db(app)
+    mongodb.init_app(app)
     bootstrap.init_app(app)
     login_manager.session_protection = 'strong'
     login_manager.login_view = 'auth.login'
@@ -35,9 +38,15 @@ def create_app():
     from . import vulnerability
     app.register_blueprint(vulnerability.bp)
 
+    from . import book
+    app.register_blueprint(book.bp)
+
     @app.route('/index')
     def index():
         return render_template('index.html')
         # return redirect(url_for('vulner.get_all', page_num=0))
 
     return app
+
+
+

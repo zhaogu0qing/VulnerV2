@@ -5,6 +5,7 @@ Created by zhaoguoqing on 18/11/11
 from flask_login import UserMixin
 from bson import ObjectId
 from .db import get_db
+from . import mongodb as db
 
 class User(UserMixin):
 
@@ -27,3 +28,9 @@ class User(UserMixin):
 
     def get_id(self):
         return self.id
+
+
+class Book(db.Document):
+    title = db.StringField()
+    author = db.StringField()
+    year = db.IntField()

@@ -14,6 +14,7 @@ flask-pymongo = "*"
 flask-wtf = "*"
 flask-bootstrap = "*"
 flask-login = "*"
+flask-mongoalchemy = "*"
 
 [dev-packages]
 watchdog = "*"

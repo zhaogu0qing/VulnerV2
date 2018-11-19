@@ -2,12 +2,13 @@
 """
 Created by zhaoguoqing on 18/11/11
 """
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 
 from .db import get_db
+from .models import Book
 
 class RegistrationForm(FlaskForm):
 
@@ -64,3 +65,32 @@ class VulnerEditForm(FlaskForm):
     vulnerAffect = TextAreaField('vulnerAffect')
     vulnerPatch = TextAreaField('vulnerPatch')
     submit = SubmitField('提交修改')
+
+
+class BookForm(Form):
+    document_class = Book
+    title = StringField(validators=[DataRequired()])
+    author = StringField(validators=[DataRequired()])
+    year = IntegerField(validators=[DataRequired()])
+    submit = SubmitField('提交')
+    instance = None
+
+    def __init__(self, document=None, *args, **kwargs):
+        super(BookForm, self).__init__(*args, **kwargs)
+        if document is not None:
+            self.instance = document
+            self._copy_data_to_form()
+
+    def _copy_data_to_form(self):
+        self.title.data = self.instance.title
+        self.year.data = self.instance.year
+        self.author.data = self.instance.author
+
+    def save(self):
+        if self.instance is None:
+            self.instance = self.document_class()
+        self.instance.title = self.title.data
+        self.instance.year = self.year.data
+        self.instance.author = self.author.data
+        self.instance.save()
+        return self.instance

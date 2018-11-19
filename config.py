@@ -11,6 +11,9 @@ class Config:
     BOOTSTRAP_SERVE_LOCAL = True
     MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
     MONGO_DATABASE = 'zgq'
+    MONGOALCHEMY_CONNECTION_STRING = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
+    MONGOALCHEMY_DATABASE = 'zgq'
+
     SSL_DISABLE = False
 
     @staticmethod
