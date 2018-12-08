@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block page_content %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {% for error in form.username.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <p>
+            {{ form.username.label }} {{ form.username() }}
+        </p>
+        <p>
+            {{ form.role.label }} {{ form.role() }}
+        </p>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+{% endblock %}

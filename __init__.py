@@ -12,8 +12,6 @@ from flask_mongoalchemy import MongoAlchemy
 
 from .config import config
 
-from . import db
-
 bootstrap = Bootstrap()
 login_manager = LoginManager()
 mongodb = MongoAlchemy()
@@ -25,7 +23,6 @@ def create_app():
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    db.init_db(app)
     mongodb.init_app(app)
     bootstrap.init_app(app)
     login_manager.session_protection = 'strong'
@@ -38,15 +35,19 @@ def create_app():
     from . import vulnerability
     app.register_blueprint(vulnerability.bp)
 
-    from . import book
-    app.register_blueprint(book.bp)
+    from .models import Vulner
 
+    @app.route('/')
     @app.route('/index')
     def index():
-        return render_template('index.html')
-        # return redirect(url_for('vulner.get_all', page_num=0))
+        vulners = Vulner.query.limit(5)
+        return render_template('index.html', vulners=vulners)
 
     return app
+
+
+
+
 
 
 

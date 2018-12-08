@@ -3,8 +3,24 @@
 {% block title %}首页{% endblock %}
 
 {% block page_content %}
-    <div class="page-header">
-        <h2>首页</h2>
+    <div class="search">
+        <h1>Search</h1>
+        <input placeholder="搜索" type="text"><input class="btn-danger" type="submit" name="搜索" title="搜索">
     </div>
-    <h1>Index</h1>
+
+    <div class="recommend">
+        <h2>热点漏洞</h2>
+        {% for vulner in vulners %}
+            <div class="card">
+                <div class="card-body card_down">
+                    <h4 class="card-title">
+                        <a href="{{ url_for('vulner.get_detail', vulner_id=vulner._id) }}">
+                            {{ vulner.title }}
+                        </a>
+                    </h4>
+                    <p class="card-text">{{ vulner.publishTime }}</p>
+                </div>
+            </div>
+        {% endfor%}
+    </div>
 {% endblock %}

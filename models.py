@@ -3,34 +3,50 @@
 Created by zhaoguoqing on 18/11/11
 """
 from flask_login import UserMixin
-from bson import ObjectId
-from .db import get_db
+from mongoalchemy.fields import StringField, IntField, ListField
+
 from . import mongodb as db
 
-class User(UserMixin):
 
-    def __init__(self, username=None, id=None):
-        self.id = id
-        self.username = username
-        db = get_db()
-        query = {}
-        if id:
-            query['_id'] = ObjectId(id)
-        if username:
-            query['username'] = username
-        self.user = db['user'].find_one(query)
-        if self.user:
-            self.id = str(self.user['_id'])
-            self.username = self.user['username']
+class Role:
+    ADMIN = 0
+    USER = 1
+
+class User(db.Document, UserMixin):
+    username = StringField()
+    password = StringField()
+    role = IntField()
 
     def is_exists(self):
-        return self.user is not None
+        return self.username is not None
 
     def get_id(self):
-        return self.id
+        return self.mongo_id
 
+    def is_administrator(self):
+        return self.role == Role.ADMIN
 
-class Book(db.Document):
-    title = db.StringField()
-    author = db.StringField()
-    year = db.IntField()
+class Vulner(db.Document):
+    url = StringField()
+    title = StringField()
+    CNNVDId = StringField()
+    CVEId = StringField()
+    source = StringField()
+    publishTime = StringField()
+    updateTime = StringField()
+    vulnerSource = StringField()
+    vulnerLevel = StringField()
+    vulnerType = StringField()
+    vulnerBulletin = StringField()
+    vulnerReference = StringField()
+    vulnerAffect = StringField()
+    threatType = StringField()
+    firm = StringField()
+    vulnerSummary = StringField()
+    vulnerPatch = StringField()
+
+class Site(db.Document):
+    name = StringField()
+    regex_list = ListField(StringField())
+    host = StringField()
+

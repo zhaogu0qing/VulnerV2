@@ -1,3 +1,7 @@
 .vulner-show table {
     border:1px solid #0094ff;
 }
+
+.center div {
+    margin: auto auto;
+}

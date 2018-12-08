@@ -1,30 +1,49 @@
 {% extends "base.html" %}
 
-{% block title %}所有漏洞{% endblock %}
+<!--{% block title %}所有漏洞{% endblock %}-->
 
 {% block page_content %}
-    <div class="page-header">
-        <h2>所有漏洞</h2>
-    </div>
 
-    <div class="col-md-4">
-        {% if not vulners %}
+    <div>
+        {% if not pagination.items %}
             <h3>没有更多漏洞信息了</h3>
         {% else %}
-            {% for vulner in vulners %}
-                <a href="{{ url_for('vulner.get_detail', vulner_id=vulner._id) }}">
-                    <div>
-                        <i>{{ vulner.idx }}</i>
-                        <h3>{{ vulner.title }}</h3>
-                        <p>{{ vulner.CNNVDId }}</p>
-                        <!--<p>{{ vulner.CVEId }}</p>-->
-                        <p>{{ vulner.publishTime }}</p>
-                        <!--<p>{{ vulner.vulnerSummary | safe }}</p>-->
-                        <!--<p>{{ vulner.vulnerBulletin | safe }}</p>-->
-                        <!--<p>{{ vulner.vulnerPatch | safe }}</p>-->
-                    </div>
-                </a>
-            {% endfor %}
+            <table class="table">
+                <thead class="text-danger">
+                    <tr>
+                        <td>CNNVDId</td>
+                        <td>title</td>
+                        <td>publishTime</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vulner in pagination.items %}
+                        <tr>
+                            <td>{{ vulner.CNNVDId }}</td>
+                            <td>
+                                <!--<a href="{{ url_for('vulner.get_detail', vulner_id=vulner._id) }}">-->
+                                    {{ vulner.title }}
+                                <!--</a>-->
+                            </td>
+                            <td>{{ vulner.publishTime }}</td>
+                            <td>
+                                <a href="{{ url_for('vulner.get_detail', vulner_id=vulner.mongo_id) }}">查看</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
+
+        <p class="pagination">
+        {% if pagination.has_prev() %}
+            <a href="{{ url_for('vulner.get_all', page_num=pagination.prev_num) }}">&lt; Previous page</a>
+        {% endif %}
+        &nbsp;
+        {% if pagination.has_next() %}
+            <a href="{{ url_for('vulner.get_all', page_num=pagination.next_num) }}">Next page &gt;</a>
+        {% endif %}
+        </p>
     </div>
 {% endblock %}

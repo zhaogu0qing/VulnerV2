@@ -3,16 +3,15 @@
 Created by zhaoguoqing on 18/11/11
 """
 from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
+from werkzeug.security import check_password_hash
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+    TextAreaField, IntegerField, SelectField, RadioField
 from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 
-from .db import get_db
-from .models import Book
+from .models import User
 
 class RegistrationForm(FlaskForm):
-
-    # email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
     username = StringField('用户名', validators=[DataRequired(),
                                                    Length(1, 64),
                                                    Regexp('^([\u4e00-\u9fa5]|[A-Za-z0-9_.])*$',
@@ -30,14 +29,8 @@ class RegistrationForm(FlaskForm):
 
     submit = SubmitField('注册')
 
-    # def validate_email(self, field):
-    #     db = get_db()
-    #     if db['user'].find_one({'username': field.data}) is not None:
-    #         raise ValidationError('该邮箱已被注册')
-
     def validate_username(self, field):
-        db = get_db()
-        if db['user'].find_one({'username': field.data}) is not None:
+        if User.query.filter(User.username == field.data).first() is not None:
             raise ValidationError('该用户名已被注册')
 
 
@@ -67,30 +60,15 @@ class VulnerEditForm(FlaskForm):
     submit = SubmitField('提交修改')
 
 
-class BookForm(Form):
-    document_class = Book
-    title = StringField(validators=[DataRequired()])
-    author = StringField(validators=[DataRequired()])
-    year = IntegerField(validators=[DataRequired()])
+class UserForm(FlaskForm):
+    document_class = User
+    username = StringField('用户名', validators=[DataRequired()])
+    role = SelectField('角色', coerce=int, choices=[(0, 'admin'), (1, 'user')], validators=[DataRequired()])
     submit = SubmitField('提交')
-    instance = None
 
-    def __init__(self, document=None, *args, **kwargs):
-        super(BookForm, self).__init__(*args, **kwargs)
-        if document is not None:
-            self.instance = document
-            self._copy_data_to_form()
+class ChangePasswordForm(FlaskForm):
+    old_password = StringField('旧密码', validators=[DataRequired()])
+    new_password = StringField('新密码', validators=[DataRequired()])
+    submit = SubmitField('提交')
 
-    def _copy_data_to_form(self):
-        self.title.data = self.instance.title
-        self.year.data = self.instance.year
-        self.author.data = self.instance.author
 
-    def save(self):
-        if self.instance is None:
-            self.instance = self.document_class()
-        self.instance.title = self.title.data
-        self.instance.year = self.year.data
-        self.instance.author = self.author.data
-        self.instance.save()
-        return self.instance

@@ -7,50 +7,59 @@
         <h2>{{ vulner.title }}</h2>
     </div>
     <div>
-        <span><a href="{{ url_for('vulner.get_all', page_num=0) }}">返回</a></span>
-        <span><a href="{{ url_for('vulner.edit', vulner_id=vulner._id) }}">编辑</a></span>
+        <a href="{{ url_for('vulner.get_all', page_num=1) }}">
+            <button type="button" class="btn-default">返回</button>
+        </a>
+        {% if current_user.is_administrator %}
+            <a href="{{ url_for('vulner.edit', vulner_id=vulner.mongo_id) }}">
+                <button type="button" class="btn-default">编辑</button>
+            </a>
+            <a href="{{ url_for('vulner.delete', id=vulner.mongo_id) }}">
+                <button type="button" class="btn-default">删除</button>
+            </a>
+        {% endif %}
     </div>
-    <div class="col-md-4">
-        <div>
-            <table class="vulner-show" border="1">
-                <tbody>
-                    <tr>
-                        <td>CNNVDId</td>
-                        <td>{{ vulner.CNNVDId }}</td>
-                    </tr>
-                    <tr>
-                        <td>CVEId</td>
-                        <td>{{ vulner.CVEId }}</td>
-                    </tr>
-                    <tr>
-                        <td>publishTime</td>
-                        <td>{{ vulner.publishTime }}</td>
-                    </tr>
-                    <tr>
-                        <td>updateTime</td>
-                        <td>{{ vulner.updateTime }}</td>
-                    </tr>
-                    <tr>
-                        <td>vulnerSource</td>
-                        <td>{{ vulner.vulnerSource}}</td>
-                    </tr>
-                    <tr>
-                        <td>vulnerLevel</td>
-                        <td>{{ vulner.vulnerLevel}}</td>
-                    </tr>
-                    <tr>
-                        <td>vulnerType</td>
-                        <td>{{ vulner.vulnerType}}</td>
-                    </tr>
-                    <tr>
-                        <td>threatType</td>
-                        <td>{{ vulner.threatType}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>{{ vulner.vulnerSummary | safe }}</p>
-            <p>{{ vulner.vulnerBulletin | safe }}</p>
-            <p>{{ vulner.vulnerPatch | safe }}</p>
-        </div>
+
+    <div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>CNNVDId</td>
+                    <td>{{ vulner.CNNVDId }}</td>
+                </tr>
+                <tr>
+                    <td>CVEId</td>
+                    <td>{{ vulner.CVEId }}</td>
+                </tr>
+                <tr>
+                    <td>publishTime</td>
+                    <td>{{ vulner.publishTime }}</td>
+                </tr>
+                <tr>
+                    <td>updateTime</td>
+                    <td>{{ vulner.updateTime }}</td>
+                </tr>
+                <tr>
+                    <td>vulnerSource</td>
+                    <td>{{ vulner.vulnerSource}}</td>
+                </tr>
+                <tr>
+                    <td>vulnerLevel</td>
+                    <td>{{ vulner.vulnerLevel}}</td>
+                </tr>
+                <tr>
+                    <td>vulnerType</td>
+                    <td>{{ vulner.vulnerType}}</td>
+                </tr>
+                <tr>
+                    <td>threatType</td>
+                    <td>{{ vulner.threatType}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>{{ vulner.vulnerSummary | safe }}</p>
+        <p>{{ vulner.vulnerBulletin | safe }}</p>
+        <p>{{ vulner.vulnerPatch | safe }}</p>
     </div>
+
 {% endblock %}

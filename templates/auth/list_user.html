@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <table class="table">
+            <thead class="text-danger">
+                <tr>
+                    <td>用户名</td>
+                    <td>用户id</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in pagination.items %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.mongo_id }}</td>
+                <td>
+                    <a href="{{ url_for('auth.edit_user', user_id=user.mongo_id) }}">Edit</a>
+                </td>
+                <td>
+                    <a href="{{ url_for('auth.delete_user', user_id=user.mongo_id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="pagination">
+        {% if pagination.has_prev() %}
+            <a href="{{ url_for('auth.list_users', page=pagination.prev_num) }}">&lt; Previous page</a>
+        {% endif %}
+        &nbsp;
+        {% if pagination.has_next() %}
+            <a href="{{ url_for('auth.list_users', page=pagination.next_num) }}">Next page &gt;</a>
+        {% endif %}
+    </p>
+{% endblock %}
