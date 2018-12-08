@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+<!--{% block title %}所有漏洞{% endblock %}-->
+
+{% block page_content %}
+
+    <div>
+        {% if not vulners %}
+            <h3>没有更多漏洞信息了</h3>
+        {% else %}
+            <table class="table">
+                <thead class="text-danger">
+                    <tr>
+                        <td>CNNVDId</td>
+                        <td>title</td>
+                        <td>publishTime</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vulner in vulners %}
+                        <tr>
+                            <td>{{ vulner.CNNVDId }}</td>
+                            <td>
+                                <!--<a href="{{ url_for('vulner.get_detail', vulner_id=vulner._id) }}">-->
+                                    {{ vulner.title }}
+                                <!--</a>-->
+                            </td>
+                            <td>{{ vulner.publishTime }}</td>
+                            <td>
+                                <a href="{{ url_for('vulner.get_detail', vulner_id=vulner.mongo_id) }}">查看</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    </div>
+{% endblock %}

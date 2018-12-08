@@ -5,7 +5,11 @@
 {% block page_content %}
     <div class="search">
         <h1>Search</h1>
-        <input placeholder="搜索" type="text"><input class="btn-danger" type="submit" name="搜索" title="搜索">
+        <form method="POST">
+            <p>
+                {{ form.key() }}<input class="btn-danger" type="submit" value="搜索" title="搜索">
+            </p>
+        </form>
     </div>
 
     <div class="recommend">
@@ -14,7 +18,7 @@
             <div class="card">
                 <div class="card-body card_down">
                     <h4 class="card-title">
-                        <a href="{{ url_for('vulner.get_detail', vulner_id=vulner._id) }}">
+                        <a href="{{ url_for('vulner.get_detail', vulner_id=vulner.mongo_id) }}">
                             {{ vulner.title }}
                         </a>
                     </h4>

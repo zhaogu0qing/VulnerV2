@@ -1,15 +1,7 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block title %}编辑漏洞{% endblock %}
-
 {% block page_content %}
-    <div class="page-header">
-        <h2>{{ vulner.title }}</h2>
-    </div>
-    <div>
-        <span><a href="{{ url_for('vulner.get_all', page_num=0) }}">&lt;&lt;返回</a></span>
-    </div>
     <div class="col-md-4">
     {{ wtf.quick_form(form) }}
     </div>

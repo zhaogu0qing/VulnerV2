@@ -44,6 +44,7 @@ class Vulner(db.Document):
     firm = StringField()
     vulnerSummary = StringField()
     vulnerPatch = StringField()
+    tag = StringField()
 
 class Site(db.Document):
     name = StringField()

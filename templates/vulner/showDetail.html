@@ -14,7 +14,16 @@
             <a href="{{ url_for('vulner.edit', vulner_id=vulner.mongo_id) }}">
                 <button type="button" class="btn-default">编辑</button>
             </a>
-            <a href="{{ url_for('vulner.delete', id=vulner.mongo_id) }}">
+            {% if not vulner.tag %}
+                <a href="{{ url_for('vulner.recommend', vulner_id=vulner.mongo_id) }}">
+                    <button type="button" class="btn-default">推荐</button>
+                </a>
+            {% else %}
+                <a href="{{ url_for('vulner.un_recommend', vulner_id=vulner.mongo_id) }}">
+                    <button type="button" class="btn-default">取消推荐</button>
+                </a>
+            {% endif %}
+            <a href="{{ url_for('vulner.delete', vulner_id=vulner.mongo_id) }}">
                 <button type="button" class="btn-default">删除</button>
             </a>
         {% endif %}

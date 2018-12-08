@@ -33,13 +33,11 @@ class RegistrationForm(FlaskForm):
         if User.query.filter(User.username == field.data).first() is not None:
             raise ValidationError('该用户名已被注册')
 
-
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('密码', validators=[DataRequired()])
     # remember_me = BooleanField('记住我')
     submit = SubmitField('登录')
-
 
 class VulnerEditForm(FlaskForm):
     title = StringField('title')
@@ -57,8 +55,8 @@ class VulnerEditForm(FlaskForm):
     vulnerReference = TextAreaField('vulnerReference')
     vulnerAffect = TextAreaField('vulnerAffect')
     vulnerPatch = TextAreaField('vulnerPatch')
+    tag = StringField('tag')
     submit = SubmitField('提交修改')
-
 
 class UserForm(FlaskForm):
     document_class = User
@@ -70,5 +68,9 @@ class ChangePasswordForm(FlaskForm):
     old_password = StringField('旧密码', validators=[DataRequired()])
     new_password = StringField('新密码', validators=[DataRequired()])
     submit = SubmitField('提交')
+
+class SearchForm(FlaskForm):
+    key = StringField(validators=[DataRequired()])
+    submit = SubmitField('搜索')
 
 
