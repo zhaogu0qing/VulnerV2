@@ -15,6 +15,7 @@ class CnnvdItem(scrapy.Item):
 
 
 class VulnerabilityItem(scrapy.Item):
+    source = scrapy.Field()
     url = scrapy.Field()
     title = scrapy.Field()
     CNNVDId = scrapy.Field()
@@ -31,6 +32,7 @@ class VulnerabilityItem(scrapy.Item):
     vulnerReference = scrapy.Field()
     vulnerAffect = scrapy.Field()
     vulnerPatch = scrapy.Field()
+    tag = scrapy.Field()
 
 
 

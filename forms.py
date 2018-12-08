@@ -40,9 +40,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('登录')
 
 class VulnerEditForm(FlaskForm):
-    title = StringField('title')
+    title = TextAreaField('title')
     CNNVDId = StringField('CNNVDId')
     CVEId = StringField('CVEId')
+    source = StringField('source')
     publishTime = StringField('publishTime')
     updateTime = StringField('updateTime')
     vulnerSource = TextAreaField('vulnerSource')

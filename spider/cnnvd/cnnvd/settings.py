@@ -10,15 +10,15 @@
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 import logging
 
-
 BOT_NAME = 'cnnvd'
 
 SPIDER_MODULES = ['cnnvd.spiders']
 NEWSPIDER_MODULE = 'cnnvd.spiders'
 
-LOG_ENABLE = False
-LOG_LEVEL = 'WARNING'
+LOG_ENABLE = True
+# LOG_LEVEL = 'WARNING'
 LOG_FILE = 'cnnvd.log'
+MAX_COUNT = 500
 
 MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
 MONGO_DATABASE = 'zgq'
@@ -77,7 +77,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'cnnvd.pipelines.BloomFilterPipeline': 300,
-   'cnnvd.pipelines.CnnvdPipeline': 301,
+   'cnnvd.pipelines.MongoPipeline': 301,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

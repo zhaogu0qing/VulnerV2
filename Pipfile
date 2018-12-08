@@ -16,6 +16,9 @@ flask-bootstrap = "*"
 flask-login = "*"
 flask-mongoalchemy = "*"
 pymongo = "==2.9"
+incremental = "*"
+scrapy = "*"
+pybloom-live = "*"
 
 [dev-packages]
 watchdog = "*"

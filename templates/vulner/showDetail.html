@@ -64,11 +64,23 @@
                     <td>threatType</td>
                     <td>{{ vulner.threatType}}</td>
                 </tr>
+                <tr>
+                    <td>vulnerSummary</td>
+                    <td>{{ vulner.vulnerSummary}}</td>
+                </tr>
+                <tr>
+                    <td>vulnerBulletin</td>
+                    <td>{{ vulner.vulnerBulletin}}</td>
+                </tr>
+                <tr>
+                    <td>vulnerPatch</td>
+                    <td>{{ vulner.vulnerPatch}}</td>
+                </tr>
             </tbody>
         </table>
-        <p>{{ vulner.vulnerSummary | safe }}</p>
-        <p>{{ vulner.vulnerBulletin | safe }}</p>
-        <p>{{ vulner.vulnerPatch | safe }}</p>
+        <!--<p>{{ vulner.vulnerSummary | safe }}</p>-->
+        <!--<p>{{ vulner.vulnerBulletin | safe }}</p>-->
+        <!--<p>{{ vulner.vulnerPatch | safe }}</p>-->
     </div>
 
 {% endblock %}

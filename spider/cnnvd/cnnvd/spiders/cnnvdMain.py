@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import re
+import time
+
+import sys
 from scrapy.spiders import Spider
 from scrapy.http import Request
+from scrapy.utils.project import get_project_settings
 from items import VulnerabilityItem
 
 class CnnvdmainSpider(Spider):
@@ -15,9 +19,13 @@ class CnnvdmainSpider(Spider):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.host = 'http://cnnvd.org.cn'
+        self.count = 0
 
-    def wash_field(self, text):
-        return text.strip()
+    @staticmethod
+    def wash_field(text):
+        text = re.sub(r'<[^>]*?>', '', text, re.S | re.M)
+        text = text.replace('\r', '').replace('\n', '').replace('\t', '').strip()
+        return text
 
     def parse(self, response):
         links = response.xpath('.//a')
@@ -47,12 +55,17 @@ class CnnvdmainSpider(Spider):
         i['vulnerType'] = response.xpath('/html/body/div[4]/div/div[1]/div[2]/ul/li[4]/a/text()').extract()[0]
         i['threatType'] = response.xpath('/html/body/div[4]/div/div[1]/div[2]/ul/li[6]/a/text()').extract()[0]
         i['firm'] = response.xpath('/html/body/div[4]/div/div[1]/div[2]/ul/li[8]/span/text()').extract()[0].replace('厂\xa0\xa0\xa0\xa0\xa0\xa0\xa0商：', '')
-        i['vulnerSummary'] = response.xpath('/html/body/div[4]/div/div[1]/div[3]').extract()[0]
-        i['vulnerBulletin'] = response.xpath('/html/body/div[4]/div/div[1]/div[4]').extract()[0]
-        i['vulnerReference'] = response.xpath('/html/body/div[4]/div/div[1]/div[5]').extract()[0]
-        i['vulnerAffect'] = response.xpath('/html/body/div[4]/div/div[1]/div[6]').extract()[0]
-        i['vulnerPatch'] = response.xpath('/html/body/div[4]/div/div[1]/div[7]').extract()[0]
+        i['vulnerSummary'] = response.xpath('/html/body/div[4]/div/div[1]/div[3]').extract()[0].replace('漏洞简介', '')
+        i['vulnerBulletin'] = response.xpath('/html/body/div[4]/div/div[1]/div[4]').extract()[0].replace('漏洞公告', '')
+        i['vulnerReference'] = response.xpath('/html/body/div[4]/div/div[1]/div[5]').extract()[0].replace('参考网址', '')
+        i['vulnerAffect'] = response.xpath('/html/body/div[4]/div/div[1]/div[6]').extract()[0].replace('受影响实体', '').replace('更多&gt;&gt;', '')
+        i['vulnerPatch'] = response.xpath('/html/body/div[4]/div/div[1]/div[7]').extract()[0].replace('补丁', '')
+        i['tag'] = ''
+        i['source'] = 'cnnvd'
         for k, v in i.items():
             i[k] = self.wash_field(i[k])
-        return i
+        # self.count += 1
+        # if self.count > self.settings.attributes['MAX_COUNT']:
+        #     print(self.settings.attributes['MAX_COUNT'])
+        yield i
 

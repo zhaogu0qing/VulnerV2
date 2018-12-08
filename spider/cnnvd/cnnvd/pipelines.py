@@ -9,9 +9,9 @@ import pymongo
 from pybloom_live import BloomFilter
 from scrapy.exceptions import DropItem
 
-class CnnvdPipeline(object):
+class MongoPipeline(object):
 
-    collection_name = 'cnnvdVulnerability'
+    collection_name = 'Vulner'
 
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -32,10 +32,9 @@ class CnnvdPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        print('[SAVE DB]',
-              # spider.crawler.stats.get('response_received_count'),
-              item['url'])
-        self.db[self.collection_name].insert_one(dict(item))
+        # print(self.mongo_uri, self.mongo_db)
+        print('[SAVE to %s]' % self.collection_name, item['url'])
+        self.db[self.collection_name].insert(dict(item))
         return item
 
 
