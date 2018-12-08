@@ -3,28 +3,28 @@
 {% block title %}首页{% endblock %}
 
 {% block page_content %}
-    <div class="search">
-        <h1>Search</h1>
-        <form method="POST">
-            <p>
-                {{ form.key() }}<input class="btn-danger" type="submit" value="搜索" title="搜索">
-            </p>
-        </form>
-    </div>
+    <div class="container">
+        <div class="search" align="right">
+            <h1>Search</h1>
+            <form method="POST">
+                <p>
+                    {{ form.key() }}<input class="btn-danger" type="submit" value="搜索" title="搜索">
+                </p>
+            </form>
+        </div>
 
-    <div class="recommend">
-        <h2>热点漏洞</h2>
-        {% for vulner in vulners %}
-            <div class="card">
-                <div class="card-body card_down">
-                    <h4 class="card-title">
-                        <a href="{{ url_for('vulner.get_detail', vulner_id=vulner.mongo_id) }}">
-                            {{ vulner.title }}
+        <div class="recommend row">
+            <h2 align="center">热点漏洞</h2>
+            <ul class="list-group">
+                {% for vulner in vulners %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('vulner.get_detail', vulner_id=vulner.mongo_id) }}" class="card-link">
+                            <h4 class="card-title">{{ vulner.title }}</h4>
                         </a>
-                    </h4>
-                    <p class="card-text">{{ vulner.publishTime }}</p>
-                </div>
-            </div>
-        {% endfor%}
+                        <p class="card-subtitle mb-2 text-muted">{{ vulner.publishTime }}</p>
+                    </li>
+                {% endfor%}
+            </ul>
+        </div>
     </div>
 {% endblock %}
