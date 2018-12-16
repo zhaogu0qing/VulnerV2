@@ -11,7 +11,7 @@ from flask_login import login_required, login_user, logout_user, current_user
 from bson import ObjectId, json_util
 
 from .forms import *
-from .models import User
+from .models import User, Role
 from .decorators import admin_required
 from . import login_manager
 
@@ -27,7 +27,8 @@ def register():
     if request.method == 'POST' and form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        user = User(username=username, password=generate_password_hash(password), role='user')
+        user = User(username=username, password=generate_password_hash(password), role=Role.USER)
+        # user.role = Role.USER
         user.save()
         flash('注册成功')
         return redirect(url_for('auth.login'))

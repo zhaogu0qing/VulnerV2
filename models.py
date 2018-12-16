@@ -46,8 +46,8 @@ class Vulner(db.Document):
     vulnerPatch = StringField()
     tag = StringField()
 
-class Site(db.Document):
-    name = StringField()
-    regex_list = ListField(StringField())
-    host = StringField()
+# class Site(db.Document):
+#     name = StringField()
+#     regex_list = ListField(StringField())
+#     host = StringField()
 

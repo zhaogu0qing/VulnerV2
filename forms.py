@@ -27,6 +27,8 @@ class RegistrationForm(FlaskForm):
         ,
     ])
 
+
+
     submit = SubmitField('注册')
 
     def validate_username(self, field):
