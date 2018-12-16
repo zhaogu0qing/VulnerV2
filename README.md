@@ -1,13 +1,41 @@
-# VulnerabilityCrawlAndShow
+author: zhaoguoqing date: 18/12/1
 
-## spider
-1. crawl sites
-  - cnnvd
-  - seebug
-2. require
-  - stable
-  - configurable
-## web
-1. simple json
-2. simple view
-3. bueatiful
+## Auth
+
+- 注册  
+
+- 登录
+
+- 登出
+
+- 修改密码
+
+- 权限控制
+
+## 漏洞
+
+- 新建漏洞
+
+- 查看漏洞
+
+- 修改漏洞
+
+- 删除漏洞 
+
+- 搜索漏洞
+    By name
+
+## 网站
+
+新建
+
+修改
+
+爬取
+
+
+
+
+
+
+

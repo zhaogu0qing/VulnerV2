@@ -5,6 +5,10 @@
 {% block page_content %}
 
     <div>
+        {% if current_user.is_administrator %}
+             <a href="{{ url_for('vulner.new') }}"><button type="button" class="btn-primary">新建</button></a>
+        {% endif %}
+
         {% if not pagination.items %}
             <h3>没有更多漏洞信息了</h3>
         {% else %}
