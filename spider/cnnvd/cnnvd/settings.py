@@ -20,8 +20,11 @@ LOG_ENABLE = True
 LOG_FILE = 'cnnvd.log'
 MAX_COUNT = 500
 
-MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
-MONGO_DATABASE = 'zgq'
+# MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
+# MONGO_DATABASE = 'zgq'
+
+MONGO_URI = 'mongodb://admin:mongodb_%40#!@188.131.194.99:27017/admin'
+MONGO_DATABASE = 'vulner'
 
 
 DOWNLOADER_STATS = False
