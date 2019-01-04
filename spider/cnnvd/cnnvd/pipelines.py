@@ -53,7 +53,7 @@ class BloomFilterPipeline(object):
             print('create a new blm file')
 
     def process_item(self, item, spider):
-        if spider.count > spider.settings.attributes['MAX_COUNT']:
+        if spider.count > spider.settings.attributes['MAX_COUNT'].value:
             spider.crawler.engine.close_spider(spider, 'crawl count > max_count')
         if item['url'] in self.bf:
             print('[Bloom Skip]', item['url'])
