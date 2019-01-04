@@ -18,7 +18,7 @@ NEWSPIDER_MODULE = 'cnnvd.spiders'
 LOG_ENABLE = True
 # LOG_LEVEL = 'WARNING'
 LOG_FILE = 'cnnvd.log'
-MAX_COUNT = 500
+MAX_COUNT = 1000
 
 # MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
 # MONGO_DATABASE = 'zgq'

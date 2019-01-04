@@ -64,8 +64,5 @@ class CnnvdmainSpider(Spider):
         for k, v in i.items():
             i[k] = self.wash_field(i[k])
         self.count += 1
-        i['count'] = self.count
-        # if self.count > self.settings.attributes['MAX_COUNT']:
-        #     print(self.settings.attributes['MAX_COUNT'])
         yield i
 

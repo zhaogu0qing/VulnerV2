@@ -32,13 +32,11 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        # print(self.mongo_uri, self.mongo_db)
+        if self.db[self.collection_name].find_one({'url': item['url']}):
+            print('[Mongo Skip]', item['url'])
+            return item
         print('[SAVE to %s]' % self.collection_name, item['url'])
         self.db[self.collection_name].insert(dict(item))
-        count = item['count']
-        del item['count']
-        if count > 10:
-            spider.crawler.engine.close_spider(spider, 'have crawl 1000')
         return item
 
 
@@ -55,8 +53,10 @@ class BloomFilterPipeline(object):
             print('create a new blm file')
 
     def process_item(self, item, spider):
+        if spider.count > spider.settings.attributes['MAX_COUNT']:
+            spider.crawler.engine.close_spider(spider, 'crawl count > max_count')
         if item['url'] in self.bf:
-            print('drop one item for exist', item['url'])
+            print('[Bloom Skip]', item['url'])
             raise DropItem('drop an item for exist')
         else:
             self.bf.add(item['url'])
