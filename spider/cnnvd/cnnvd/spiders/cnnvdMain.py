@@ -41,7 +41,6 @@ class CnnvdmainSpider(Spider):
                 # print('[link]', href)
                 yield Request(self.host + href, callback=self.parse)
 
-
     def parse_vulner(self, response):
         i = VulnerabilityItem()
         i['url'] = response.url
@@ -64,7 +63,8 @@ class CnnvdmainSpider(Spider):
         i['source'] = 'cnnvd'
         for k, v in i.items():
             i[k] = self.wash_field(i[k])
-        # self.count += 1
+        self.count += 1
+        i['count'] = self.count
         # if self.count > self.settings.attributes['MAX_COUNT']:
         #     print(self.settings.attributes['MAX_COUNT'])
         yield i

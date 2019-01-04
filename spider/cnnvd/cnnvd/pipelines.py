@@ -35,6 +35,10 @@ class MongoPipeline(object):
         # print(self.mongo_uri, self.mongo_db)
         print('[SAVE to %s]' % self.collection_name, item['url'])
         self.db[self.collection_name].insert(dict(item))
+        count = item['count']
+        del item['count']
+        if count > 10:
+            spider.crawler.engine.close_spider(spider, 'have crawl 1000')
         return item
 
 
