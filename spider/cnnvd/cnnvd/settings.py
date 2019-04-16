@@ -20,12 +20,13 @@ LOG_ENABLE = True
 LOG_FILE = 'cnnvd.log'
 MAX_COUNT = 1000
 
-# MONGO_URI = 'mongodb://admin_zgq:ZGQ_mongodb@123.206.33.158:27017/admin'
-# MONGO_DATABASE = 'zgq'
+# 设置广度优先
+DEPTH_PRIORITY = 1
+SCHEDULER_DISK_QUEUE = 'scrapy.squeue.PickleFifoDiskQueue'
+SCHEDULER_MEMORY_QUEUE = 'scrapy.squeue.FifoMemoryQueue'
 
 MONGO_URI = 'mongodb://admin:mongodb_%40#!@188.131.194.99:27017/admin'
 MONGO_DATABASE = 'vulner'
-
 
 DOWNLOADER_STATS = False
 
